@@ -101,11 +101,11 @@ void SetData(reg_polygon* reg_pol, int amount, int* output)
     }
 
     //Area
-    if (reg_pol[amount].length == 3) reg_pol[amount].area =  pow(reg_pol[amount].length, 2) * sqrt(3) / 4;
-    if (reg_pol[amount].length == 4) reg_pol[amount].area = pow(reg_pol[amount].length, 2);
+    if (reg_pol[amount].length == 3) reg_pol[amount].area =  pow(reg_pol[amount].length, 2) * sqrt(3) / 4; //Частный случай - три стороны
+    if (reg_pol[amount].length == 4) reg_pol[amount].area = pow(reg_pol[amount].length, 2); //Частный случай - четыре стороны
     else
     {
-        reg_pol[amount].area = 0.25 * reg_pol[amount].count_sides * pow(reg_pol[amount].length, 2) * pow(tan(M_PI / ((double)reg_pol[amount].count_sides)), -1.0);
+        reg_pol[amount].area = 0.25 * reg_pol[amount].count_sides * pow(reg_pol[amount].length, 2) * pow(tan(M_PI / ((double)reg_pol[amount].count_sides)), -1.0); //Общая формула
     }
     //Perimeter
     reg_pol[amount].perimeter = reg_pol[amount].count_sides * reg_pol[amount].length;
@@ -116,9 +116,9 @@ void SetData(reg_polygon* reg_pol, int amount, int* output)
     reg_pol[amount].y = new double[ reg_pol[amount].count_sides ];
 
     flag = false;
-    cout << "Input x:" << '\n';
+    cout << "Input x: " << '\n';
     cin >> reg_pol[amount].x[0];
-    cout << "Input y:" << '/n';
+    cout << "Input y: " << '\n';
     cin >> reg_pol[amount].y[0];
 
     double straightLine = pow( pow(reg_pol[amount].x[0], 2) + pow(reg_pol[amount].y[0], 2), 0.5);
@@ -126,16 +126,16 @@ void SetData(reg_polygon* reg_pol, int amount, int* output)
     if ( straightLine - Radius > 0) flag = true;
     while (flag == false)
     {
-        cout << "This point should be the farthest" << '/n';
+        cout << "This point should be the farthest" << '\n';
         cout << "Input x:" << '\n';
         cin >> reg_pol[amount].x[ 0];
-        cout << "Input y:" << '/n';
+        cout << "Input y:" << '\n';
         cin >> reg_pol[amount].y[ 0];
         straightLine = pow( pow(reg_pol[amount].x[0], 2) + pow(reg_pol[amount].y[0], 2), 0.5);
         Radius = reg_pol[amount].length / (2 * sin(M_PI / (reg_pol[amount].count_sides)));
         if ( straightLine - Radius > 0) flag = true;
     }
-    cout << "Done!" << '/n';
+    cout << "Done!" << '\n';
 
 
     coordinates(reg_pol, amount);
@@ -168,7 +168,7 @@ void menu(reg_polygon* NewPolygon, int PolygonAmount, int* output)
         case 2:
             cout << '\n';
 
-            cout << "OK, let's look" << '\n';
+            cout << "So, let's look on your polygons" << '\n' << '\n';
                 print(NewPolygon, PolygonAmount, output);
             break;
         case 3:
@@ -209,7 +209,7 @@ void area_perimeter(int k ,struct reg_polygon* reg_pol, int amount, int* output)
     int i_max = 0;
     if (k == 1)
     {
-        if (amount == 0) cout << "There are no polygons" << '/n';
+        if (amount == 0) cout << "There are no polygons" << '\n';
         else
         {
 
@@ -224,12 +224,12 @@ void area_perimeter(int k ,struct reg_polygon* reg_pol, int amount, int* output)
                     cout << i + 1 << '\t';
                 }
             }
-            cout << '/n';
+            cout << '\n';
         }
     }
     else if (k == 2)
     {
-        if (amount == 0) cout << "There are no polygons" << '/n';
+        if (amount == 0) cout << "There are no polygons" << '\n';
         else
         {
             for (int i = 0; i < amount; i++)
@@ -243,7 +243,7 @@ void area_perimeter(int k ,struct reg_polygon* reg_pol, int amount, int* output)
                     cout << i + 1 << '\t';
                 }
             }
-            cout << '/n';
+            cout << '\n';
         }
     }
 
@@ -316,7 +316,7 @@ void print(reg_polygon* reg_polygon, int amount, int* output)
     {
         if (output[i] == 1)
         {
-            cout << "Polygon serial number: " << i + 1 << '\n';
+            cout << "Polygon's serial number: " << i + 1 << '\n';
 
             cout << "Quantity of the vertices: ";
             cout << reg_polygon[i].count_sides << '\n';
@@ -345,18 +345,18 @@ void submenu(reg_polygon* NewPolygon, int PolygonAmount, int* output)
 {
     int k;
     cout << "What are you going to do?" << '\n';
-    cout << "1 - Max Area" << '/n' << "2 - Max Perimeter"  << '/n' << "3 - quit" << '/n';
+    cout << "1 - Max Area" << '\n' << "2 - Max Perimeter"  << '\n' << "3 - quit" << '\n';
     cin >> k;
 
     switch (k)
     {
         case 1:
-            cout << "Let's look" << '/n' << "-----------------------" << '/n';
+            cout << "Let's look" << '\n' << '\n' << '\n';
             area_perimeter(k , NewPolygon, PolygonAmount, output);
             cout << "That's all" << '\n';
             break;
         case 2:
-            cout << "Let's look" << '/n' << "-----------------------" << '/n';
+            cout << "Let's look" << '\n' << '\n' << '\n';
             area_perimeter(k , NewPolygon, PolygonAmount, output);
             cout << "That's all" << '\n';
 
