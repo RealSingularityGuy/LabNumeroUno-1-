@@ -343,10 +343,11 @@ void print(reg_polygon* reg_polygon, int amount, int* output)
 
 void submenu(reg_polygon* NewPolygon, int PolygonAmount, int* output)
 {
-    int k;
-    cout << "What are you going to do?" << '\n';
+    cout << "What are you wanna do?" << '\n';
     cout << "1 - Max Area" << '\n' << "2 - Max Perimeter"  << '\n' << "3 - quit" << '\n';
-    cin >> k;
+    char choice = '0';
+    cin >> choice;
+    int k = int(choice)-48;
 
     switch (k)
     {
