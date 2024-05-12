@@ -207,46 +207,20 @@ void menu(reg_polygon* NewPolygon, int PolygonAmount, int* output)
 void area_perimeter(int k ,struct reg_polygon* reg_pol, int amount, int* output)
 {
     int i_max = 0;
-    if (k == 1)
+    if (amount == 0)
     {
-        if (amount == 0) cout << "There are no polygons" << '\n';
-        else
-        {
-
-            for (int i = 0; i < amount; i++)
-            {
-                if (((reg_pol[i].area - reg_pol[i_max].area) > 0) && (output[i] == 1 )) i_max = i;
-            }
-            for (int i = i_max; i < amount; i++)
-            {
-                if (((reg_pol[i].area - reg_pol[i_max].area) == 0) && (output[i] == 1 ))
-                {
-                    cout << i + 1 << '\t';
-                }
-            }
-            cout << '\n';
-        }
+        cout << "There are no polygons" << '\n';
+        return;
     }
-    else if (k == 2)
-    {
-        if (amount == 0) cout << "There are no polygons" << '\n';
-        else
-        {
-            for (int i = 0; i < amount; i++)
-            {
-                if (((reg_pol[i].perimeter - reg_pol[i_max].perimeter) > 0) && (output[i] == 1 )) i_max = i;
-            }
-            for (int i = i_max; i < amount; i++)
-            {
-                if (((reg_pol[i].perimeter - reg_pol[i_max].perimeter) == 0) && (output[i] == 1 ))
-                {
-                    cout << i + 1 << '\t';
-                }
-            }
-            cout << '\n';
-        }
-    }
+    double *temp = new double[amount];
+    if (k == 1) for (int j = 0; j < amount; j++) temp[j] = reg_pol[j].area;
+    else if (k == 2) for (int j = 0; j < amount; j++) temp[j] = reg_pol[j].perimeter;
 
+    for (int i = 0; i < amount; i++) if (((temp[i] - temp[i_max]) > 0) && (output[i] == 1 )) i_max = i;
+    for (int i = i_max; i < amount; i++) if (((temp[i] - temp[i_max]) == 0) && (output[i] == 1 )) cout << i + 1 << '\t';
+
+    delete[] temp;
+    cout << '\n';
 }
 
 void coordinates(struct reg_polygon* reg_polygon, int amount)
