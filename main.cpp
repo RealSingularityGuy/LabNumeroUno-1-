@@ -56,7 +56,6 @@ reg_polygon* AddStruct(reg_polygon* reg_pol, int amount)
 
 int* AddOutput(int amount, int* output)
 {
-
     if (amount != 0)
     {
         int* temp2 = new int[amount + 1];
@@ -106,7 +105,7 @@ void SetData(reg_polygon* reg_pol, int amount, int* output)
     if (reg_pol[amount].length == 4) reg_pol[amount].area = pow(reg_pol[amount].length, 2);
     else
     {
-        reg_pol[amount].area = 0.25 * reg_pol[amount].count_sides * reg_pol[amount].length * reg_pol[amount].length * pow(tan(M_PI / ((double)reg_pol[amount].count_sides)), -1.0);
+        reg_pol[amount].area = 0.25 * reg_pol[amount].count_sides * pow(reg_pol[amount].length, 2) * pow(tan(M_PI / ((double)reg_pol[amount].count_sides)), -1.0);
     }
     //Perimeter
     reg_pol[amount].perimeter = reg_pol[amount].count_sides * reg_pol[amount].length;
@@ -122,9 +121,9 @@ void SetData(reg_polygon* reg_pol, int amount, int* output)
     cout << "Input y:" << '/n';
     cin >> reg_pol[amount].y[0];
 
-    double pramaya = pow( pow(reg_pol[amount].x[0], 2) + pow(reg_pol[amount].y[0], 2), 0.5);
+    double straightLine = pow( pow(reg_pol[amount].x[0], 2) + pow(reg_pol[amount].y[0], 2), 0.5);
     double Radius = reg_pol[amount].length / (2 * sin(M_PI / (reg_pol[amount].count_sides)));
-    if ( pramaya - Radius > 0) flag = true;
+    if ( straightLine - Radius > 0) flag = true;
     while (flag == false)
     {
         cout << "This point should be the farthest" << '/n';
@@ -132,11 +131,11 @@ void SetData(reg_polygon* reg_pol, int amount, int* output)
         cin >> reg_pol[amount].x[ 0];
         cout << "Input y:" << '/n';
         cin >> reg_pol[amount].y[ 0];
-        pramaya = pow( pow(reg_pol[amount].x[0], 2) + pow(reg_pol[amount].y[0], 2), 0.5);
+        straightLine = pow( pow(reg_pol[amount].x[0], 2) + pow(reg_pol[amount].y[0], 2), 0.5);
         Radius = reg_pol[amount].length / (2 * sin(M_PI / (reg_pol[amount].count_sides)));
-        if ( pramaya - Radius > 0) flag = true;
+        if ( straightLine - Radius > 0) flag = true;
     }
-    cout << "It works!" << '/n';
+    cout << "Done!" << '/n';
 
 
     coordinates(reg_pol, amount);
@@ -185,7 +184,7 @@ void menu(reg_polygon* NewPolygon, int PolygonAmount, int* output)
             }
             else
             {
-                cout << "It works!" << '\n';
+                cout << "Done!" << '\n';
                 output[chosenForDelete - 1] = 0;
 
             }
@@ -322,7 +321,7 @@ void print(reg_polygon* reg_polygon, int amount, int* output)
             cout << "Quantity of the vertices: ";
             cout << reg_polygon[i].count_sides << '\n';
 
-            cout << "Coordinates of vertexes: " << '\n';
+            cout << "Coordinates of the vertices: " << '\n';
             for (int j = 0; j < reg_polygon[i].count_sides; j++)
             {
                 cout << "x" << j << ": " << reg_polygon[i].x[j] << '\n';
@@ -332,7 +331,7 @@ void print(reg_polygon* reg_polygon, int amount, int* output)
             cout << "Area = " << reg_polygon[i].area << '\n';
             cout << "Perimeter= " << reg_polygon[i].perimeter << '\n';
 
-            cout << "It works!" << '\n' << '\n' << '\n';
+            cout << "Done!" << '\n' << '\n' << '\n';
         }
         else
         {
