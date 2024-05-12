@@ -1,7 +1,6 @@
 #include <iostream>
 #include <cmath>
 
-
 using namespace std;
 
 struct reg_polygon {
@@ -14,15 +13,14 @@ struct reg_polygon {
 };
 
 void area_perimeter(int k ,struct reg_polygon* reg_pol, int amount, int* output);
-void SetData(reg_polygon* reg_pol, int amount, int* output);                            //Внесение данных о новом многоугольнике
-reg_polygon* AddStruct(reg_polygon* reg_pol, int amount);                               //Внесение данных о новом многоугольнике
+void SetData(reg_polygon* reg_pol, int amount, int* output);                            //Р’РЅРµСЃРµРЅРёРµ РґР°РЅРЅС‹С… Рё РїСЂРѕРІРµСЂРєР° РІРІРµРґС‘РЅРЅС‹С… Р·РЅР°С‡РµРЅРёР№, РІС‹С‡РёСЃР»РµРЅРёРµ РїР»РѕС‰Р°РґРё, РїРµСЂРёРјРµС‚СЂР°
+reg_polygon* AddStruct(reg_polygon* reg_polygon, int amount);
 int* AddOutput(int amount, int* output);
-void menu(reg_polygon* NewPolygon, int PolygonAmount, int* output);                     //Меню
-void coordinates(struct reg_polygon* reg_pol, int amount);                              //Вычисление координат
-void print(reg_polygon* NewPolygon, int amount, int* output);                           //Вывод
-void submenu(reg_polygon* NewPolygon, int PolygonAmount, int* output);                  //Подменю
-void check(reg_polygon* NewPolygon, int PolygonAmount, int* output);                    //Подтверждение выхода
-
+void menu(reg_polygon* NewPolygon, int PolygonAmount, int* output);                     //РњРµРЅСЋ
+void coordinates(struct reg_polygon* reg_pol, int amount);                              //Р’С‹С‡РёСЃР»РµРЅРёРµ РєРѕРѕСЂРґРёРЅР°С‚
+void print(reg_polygon* NewPolygon, int amount, int* output);                           //Р’С‹РІРѕРґ
+void submenu(reg_polygon* NewPolygon, int PolygonAmount, int* output);                  //РџРѕРґРјРµРЅСЋ
+void check(reg_polygon* NewPolygon, int PolygonAmount, int* output);                    //РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ РІС‹С…РѕРґР°
 
 
 int main()
@@ -104,8 +102,8 @@ void SetData(reg_polygon* reg_pol, int amount, int* output)
     }
 
     //Area
-    if (reg_pol[amount].length == 3) reg_pol[amount].area = reg_pol[amount].length * reg_pol[amount].length * sqrt(3) / 4;
-    if (reg_pol[amount].length == 4) reg_pol[amount].area = reg_pol[amount].length * reg_pol[amount].length;
+    if (reg_pol[amount].length == 3) reg_pol[amount].area =  pow(reg_pol[amount].length, 2) * sqrt(3) / 4;
+    if (reg_pol[amount].length == 4) reg_pol[amount].area = pow(reg_pol[amount].length, 2);
     else
     {
         reg_pol[amount].area = 0.25 * reg_pol[amount].count_sides * reg_pol[amount].length * reg_pol[amount].length * pow(tan(M_PI / ((double)reg_pol[amount].count_sides)), -1.0);
@@ -120,9 +118,9 @@ void SetData(reg_polygon* reg_pol, int amount, int* output)
 
     flag = false;
     cout << "Input x:" << '\n';
-    cin >> reg_pol[amount].x[ 0];
+    cin >> reg_pol[amount].x[0];
     cout << "Input y:" << '/n';
-    cin >> reg_pol[amount].y[ 0];
+    cin >> reg_pol[amount].y[0];
 
     double pramaya = pow( pow(reg_pol[amount].x[0], 2) + pow(reg_pol[amount].y[0], 2), 0.5);
     double Radius = reg_pol[amount].length / (2 * sin(M_PI / (reg_pol[amount].count_sides)));
@@ -147,13 +145,13 @@ void SetData(reg_polygon* reg_pol, int amount, int* output)
 void menu(reg_polygon* NewPolygon, int PolygonAmount, int* output)
 {
     int chosenForDelete = 0;
-    cout << '\n' << "MENU" << '\n' << "----------------------" << '\n';
+    cout << '\n' << "MENU" << '\n' << '\n';
     cout << "Choose the point" << '\n';
     cout << "1 - Add polygon" << '\n';
     cout << "2 - Show polygons" << '\n';
     cout << "3 - Delete polygon" << '\n';
-    cout << "4 - Area/perimeter" << '\n';
-    cout << "5 - Close the programm" << '\n';
+    cout << "4 - Area and perimeter" << '\n';
+    cout << "5 - Close the program" << '\n';
     cout << '\n' << "Your input: ";
 
     char choice = '0';
@@ -162,46 +160,46 @@ void menu(reg_polygon* NewPolygon, int PolygonAmount, int* output)
     cout << '\n';
     switch (choose)
     {
-    case 1:
-        NewPolygon = AddStruct(NewPolygon, PolygonAmount);
-        output = AddOutput(PolygonAmount, output);
-        SetData(NewPolygon, PolygonAmount, output);
-        PolygonAmount++;
-        break;
-    case 2:
-        cout << '\n';
+        case 1:
+            NewPolygon = AddStruct(NewPolygon, PolygonAmount);
+            output = AddOutput(PolygonAmount, output);
+            SetData(NewPolygon, PolygonAmount, output);
+            PolygonAmount++;
+            break;
+        case 2:
+            cout << '\n';
 
-        cout << "OK, let's look" << '\n';
-        print(NewPolygon, PolygonAmount, output);
-        break;
-    case 3:
-        cout << "Which polygon you want to delete? Input the sequence number:" << '\n';
-        cin >> chosenForDelete;
-        if (chosenForDelete > PolygonAmount)
-        {
-            cout << "There is no such polygon yet :( " << '\n';
-        }
-        else if (chosenForDelete < 1)
-        {
-            cout << "Error: try again! " << '\n';
-        }
-        else
-        {
-            cout << "As you wish" << '\n';
-            output[chosenForDelete - 1] = 0;
+            cout << "OK, let's look" << '\n';
+                print(NewPolygon, PolygonAmount, output);
+            break;
+        case 3:
+            cout << "Which polygon you want to delete? Input number of it: " << '\n';
+            cin >> chosenForDelete;
+            if (chosenForDelete > PolygonAmount)
+            {
+                cout << "There is no such polygon yet :( " << '\n';
+            }
+            else if (chosenForDelete < 1)
+            {
+                cout << "Error: try again! " << '\n';
+            }
+            else
+            {
+                cout << "It works!" << '\n';
+                output[chosenForDelete - 1] = 0;
 
-        }
-        break;
-    case 4:
-        submenu(NewPolygon, PolygonAmount, output);
-        break;
-    case 5:
-        check(NewPolygon, PolygonAmount, output);
-        return;
-        break;
-    default:
-        cout << "Incorrect! Try again" << '\n';
-        break;
+            }
+            break;
+        case 4:
+            submenu(NewPolygon, PolygonAmount, output);
+            break;
+        case 5:
+            check(NewPolygon, PolygonAmount, output);
+            return;
+            break;
+        default:
+            cout << "Not correct! Try it again" << '\n';
+            break;
     }
     menu(NewPolygon, PolygonAmount, output);
     return;
@@ -212,7 +210,7 @@ void area_perimeter(int k ,struct reg_polygon* reg_pol, int amount, int* output)
     int i_max = 0;
     if (k == 1)
     {
-        if (amount == 0) cout << "there are no polygons" << '/n';
+        if (amount == 0) cout << "There are no polygons" << '/n';
         else
         {
 
@@ -232,7 +230,7 @@ void area_perimeter(int k ,struct reg_polygon* reg_pol, int amount, int* output)
     }
     else if (k == 2)
     {
-        if (amount == 0) cout << "there are no polygons" << '/n';
+        if (amount == 0) cout << "There are no polygons" << '/n';
         else
         {
             for (int i = 0; i < amount; i++)
@@ -252,7 +250,7 @@ void area_perimeter(int k ,struct reg_polygon* reg_pol, int amount, int* output)
 
 }
 
-void coordinates(struct regular_polygon* reg_pol, int amount)
+void coordinates(struct reg_polygon* reg_polygon, int amount)
 {
     long double Radius = reg_polygon[amount].length / (2 * sin(M_PI / (reg_polygon[amount].count_sides)));
     long double alpha = 2 * M_PI / reg_polygon[amount].count_sides;
@@ -296,20 +294,51 @@ void coordinates(struct regular_polygon* reg_pol, int amount)
             reg_polygon[amount].y[i] = O_y + Radius * sin(phi - i * alpha);
         }
     }
-    else if ((reg_pol[amount].x[0] > 0) && (reg_pol[amount].y[0] < 0))
+    else if ((reg_polygon[amount].x[0] > 0) && (reg_polygon[amount].y[0] < 0))
     {
-        long double phi = M_PI/2 + atan(reg_pol[amount].y[0]/reg_pol[amount].x[0]);
+        long double phi = M_PI/2 + atan(reg_polygon[amount].y[0]/reg_polygon[amount].x[0]);
         long double Rx = Radius*cos(phi);
         long double Ry = Radius*sin(phi);
-        long double O_x = reg_pol[amount].x[0] - Rx;
-        long double O_y = reg_pol[amount].y[0] + Ry;
-        for (int i = 1; i < reg_pol[amount].count_sides; i++)
+        long double O_x = reg_polygon[amount].x[0] - Rx;
+        long double O_y = reg_polygon[amount].y[0] + Ry;
+        for (int i = 1; i < reg_polygon[amount].count_sides; i++)
         {
-            reg_pol[amount].x[i] = O_x + Radius * cos(phi - i * alpha);
-            reg_pol[amount].y[i] = O_y - Radius * sin(phi - i * alpha);
+            reg_polygon[amount].x[i] = O_x + Radius * cos(phi - i * alpha);
+            reg_polygon[amount].y[i] = O_y - Radius * sin(phi - i * alpha);
         }
     }
 
+    return;
+}
+
+void print(reg_polygon* reg_polygon, int amount, int* output)
+{
+    for (int i = 0; i < amount; i++)
+    {
+        if (output[i] == 1)
+        {
+            cout << "Polygon serial number: " << i + 1 << '\n';
+
+            cout << "Quantity of the vertices: ";
+            cout << reg_polygon[i].count_sides << '\n';
+
+            cout << "Coordinates of vertexes: " << '\n';
+            for (int j = 0; j < reg_polygon[i].count_sides; j++)
+            {
+                cout << "x" << j << ": " << reg_polygon[i].x[j] << '\n';
+                cout << "y" << j << ": " << reg_polygon[i].y[j] << '\n' << '\n';
+            }
+
+            cout << "Area = " << reg_polygon[i].area << '\n';
+            cout << "Perimeter= " << reg_polygon[i].perimeter << '\n';
+
+            cout << "It works!" << '\n' << '\n' << '\n';
+        }
+        else
+        {
+            for (int i = 0; i < 7; i++) cout << '\n';
+        }
+    }
     return;
 }
 
