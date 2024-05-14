@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cmath>
-
+#include <bits/stdc++.h>
 using namespace std;
 
 struct reg_polygon {
@@ -153,9 +153,23 @@ void menu(reg_polygon* NewPolygon, int PolygonAmount, int* output)
     cout << "5 - Close the program" << '\n';
     cout << '\n' << "Your input: ";
 
-    char choice = '0';
-    cin >> choice;
-    int choose = int(choice)-48;
+    //Адекватная проверка ввода
+	string choice = "0";
+	cin >> choice;
+	int choose = 0;
+	bool flag2 = true;
+
+	for (char c : choice)
+    {
+		if (c >= '0' && c <= '9') choose = choose * 10 + (c - '0');
+		else {
+		    bool flag2 = false;
+            cout << "Bad Input";
+            break;
+		}
+		if (flag2 = true) cout << choose;
+	}
+
     cout << '\n';
     switch (choose)
     {
