@@ -96,7 +96,7 @@ void SetData(reg_polygon* reg_pol, int amount, int* output)
     while (flag == false)
     {
         cout << "You entered the length of the side less than 0. It must be more than 0!" << '\n';
-        cin >> reg_pol[amount].count_sides;
+        cin >> reg_pol[amount].length;
         if (reg_pol[amount].length > 0) flag = true;
     }
 
@@ -154,7 +154,7 @@ void menu(reg_polygon* NewPolygon, int PolygonAmount, int* output)
     cout << '\n' << "Your input: ";
 
     //Адекватная проверка ввода
-	string choice = "0";
+	string choice;
 	cin >> choice;
 	int choose = 0;
 	bool flag2 = true;
@@ -167,8 +167,8 @@ void menu(reg_polygon* NewPolygon, int PolygonAmount, int* output)
             cout << "Bad Input";
             break;
 		}
-		if (flag2 = true) cout << choose;
 	}
+	if (flag2 = true) cout << choose;
 
     cout << '\n';
     switch (choose)
@@ -300,11 +300,13 @@ void coordinates(struct reg_polygon* reg_polygon, int amount)
 
 void print(reg_polygon* reg_polygon, int amount, int* output)
 {
+    int number = 0;
     for (int i = 0; i < amount; i++)
     {
         if (output[i] == 1)
         {
-            cout << "Polygon's serial number: " << i + 1 << '\n';
+            number++;
+            cout << "Polygon's serial number: " << number << '\n';
 
             cout << "Quantity of the vertices: ";
             cout << reg_polygon[i].count_sides << '\n';
@@ -333,20 +335,34 @@ void submenu(reg_polygon* NewPolygon, int PolygonAmount, int* output)
 {
     cout << "What are you wanna do?" << '\n';
     cout << "1 - Max Area" << '\n' << "2 - Max Perimeter"  << '\n' << "3 - quit" << '\n';
-    char choice = '0';
-    cin >> choice;
-    int k = int(choice)-48;
+    string choice;
+	cin >> choice;
+	int p = 0;
+	bool flag2 = true;
 
-    switch (k)
+	for (char c : choice)
+    {
+		if (c >= '0' && c <= '9') p = p * 10 + (c - '0');
+		else {
+		    bool flag2 = false;
+            cout << "Bad Input";
+            break;
+		}
+	}
+	if (flag2 = true) cout << p;
+
+    cout << '\n';
+
+    switch (p)
     {
         case 1:
             cout << "Let's look" << '\n' << '\n' << '\n';
-            area_perimeter(k , NewPolygon, PolygonAmount, output);
+            area_perimeter(p , NewPolygon, PolygonAmount, output);
             cout << "That's all" << '\n';
             break;
         case 2:
             cout << "Let's look" << '\n' << '\n' << '\n';
-            area_perimeter(k , NewPolygon, PolygonAmount, output);
+            area_perimeter(p , NewPolygon, PolygonAmount, output);
             cout << "That's all" << '\n';
 
             break;
@@ -363,8 +379,23 @@ void submenu(reg_polygon* NewPolygon, int PolygonAmount, int* output)
 void check(reg_polygon* NewPolygon, int PolygonAmount, int* output)
 {
     cout << "Are you sure that you want to quit? (1 - yes; 0 - no)" << '\n';
-    int k;
-    cin >> k;
+    string choice;
+	cin >> choice;
+	int k = 0;
+	bool flag2 = true;
+
+	for (char c : choice)
+    {
+		if (c >= '0' && c <= '9') k = k * 10 + (c - '0');
+		else {
+		    bool flag2 = false;
+            cout << "Bad Input";
+            break;
+		}
+	}
+	if (flag2 = true) cout << k;
+
+    cout << '\n';
     switch (k)
     {
         case 1:
