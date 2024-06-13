@@ -79,7 +79,7 @@ void SetData(reg_polygon* reg_pol, int amount, int* output)
     if (reg_pol[amount].count_sides > 2) flag = true;
     while (flag == false)
     {
-        cout << "Haha, " << reg_pol[amount].count_sides << "-sided polygon lmao))" <<'\n';
+        cout << "Haha, " << reg_pol[amount].count_sides << "-sided polygon lmao))" << " Count of the sides must be more than 2!!!!" <<'\n';
         cin >> reg_pol[amount].count_sides;
         if (reg_pol[amount].count_sides > 2)
         {
@@ -292,6 +292,58 @@ void coordinates(struct reg_polygon* reg_polygon, int amount)
         {
             reg_polygon[amount].x[i] = O_x + Radius * cos(phi - i * alpha);
             reg_polygon[amount].y[i] = O_y - Radius * sin(phi - i * alpha);
+        }
+    }
+    else if ((reg_polygon[amount].x[0] == 0) && (reg_polygon[amount].y[0] > 0))
+    {
+        long double phi = M_PI/2;
+        long double Rx = 0;
+        long double Ry = Radius;
+        long double O_x = reg_polygon[amount].x[0] - Rx;
+        long double O_y = reg_polygon[amount].y[0] - Ry;
+        for (int i = 1; i < reg_polygon[amount].count_sides; i++)
+        {
+            reg_polygon[amount].x[i] = O_x + Radius * cos(phi + i * alpha);
+            reg_polygon[amount].y[i] = O_y + Radius * sin(phi + i * alpha);
+        }
+    }
+    else if ((reg_polygon[amount].x[0] == 0) && (reg_polygon[amount].y[0] < 0))
+    {
+        long double phi = -M_PI/2;
+        long double Rx = 0;
+        long double Ry = -Radius;
+        long double O_x = reg_polygon[amount].x[0] - Rx;
+        long double O_y = reg_polygon[amount].y[0] - Ry;
+        for (int i = 1; i < reg_polygon[amount].count_sides; i++)
+        {
+            reg_polygon[amount].x[i] = O_x - Radius * cos(phi + i * alpha);
+            reg_polygon[amount].y[i] = O_y - Radius * sin(phi + i * alpha);
+        }
+    }
+    else if ((reg_polygon[amount].x[0] > 0) && (reg_polygon[amount].y[0] == 0))
+    {
+        long double phi = 0;
+        long double Rx = Radius;
+        long double Ry = 0;
+        long double O_x = reg_polygon[amount].x[0] - Rx;
+        long double O_y = reg_polygon[amount].y[0] - Ry;
+        for (int i = 1; i < reg_polygon[amount].count_sides; i++)
+        {
+            reg_polygon[amount].x[i] = O_x + Radius * cos(phi + i * alpha);
+            reg_polygon[amount].y[i] = O_y + Radius * sin(phi + i * alpha);
+        }
+    }
+    else if ((reg_polygon[amount].x[0] < 0) && (reg_polygon[amount].y[0] == 0))
+    {
+        long double phi = M_PI;
+        long double Rx = -Radius;
+        long double Ry = 0;
+        long double O_x = reg_polygon[amount].x[0] - Rx;
+        long double O_y = reg_polygon[amount].y[0] - Ry;
+        for (int i = 1; i < reg_polygon[amount].count_sides; i++)
+        {
+            reg_polygon[amount].x[i] = O_x + Radius * cos(phi + i * alpha);
+            reg_polygon[amount].y[i] = O_y + Radius * sin(phi + i * alpha);
         }
     }
 
